@@ -31,9 +31,9 @@ boolean Remote = true;
 boolean textswitch; // Variable, die zwischen der Eingabe von Steurungs-Strings und der Eingabe von Text-Strings umschaltet
 
 // AUGEN
-//float xMouse;
-//float yMouse;
-//float easing = 0.1;
+float xMouse;
+float yMouse;
+float easing = 0.1;
 
 
 void setup() {
@@ -95,7 +95,7 @@ void draw() {
   // ellipse, die der Maus-Position mit Easing folgt
   // Wird zurückgestellt, vorerst werden Servo-Motoren und DC-Motor zuverlässig
   // angesteuert!
-  /*
+  
 
    
    
@@ -111,7 +111,7 @@ void draw() {
    fill(255, 0, 0, 50);
    ellipse(xMouse, yMouse, 50, 50);
    
-   */
+   
 
   // einfache, statische Augen
   text( "X " + mouseX, mouseX + 50, mouseY );
