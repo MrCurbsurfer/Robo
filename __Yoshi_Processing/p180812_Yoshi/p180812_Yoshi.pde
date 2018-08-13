@@ -9,7 +9,7 @@ import guru.ttslib.*;
 Serial OrionPort;
 Serial ArduinoPort;
 
-int value;
+int val;
 boolean Auto = false;
 String mode = "Standby"; // Die Variable für Message Received
 
