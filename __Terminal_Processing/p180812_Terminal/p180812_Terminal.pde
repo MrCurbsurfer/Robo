@@ -25,7 +25,7 @@ String last_string = "";
 
 
 int fontColor = 255;
-int mapX; // ServoVariable
+//int mapX; // ServoVariable
 boolean Auto = false;
 boolean Remote = true;
 boolean textswitch; // Variable, die zwischen der Eingabe von Steurungs-Strings und der Eingabe von Text-Strings umschaltet
@@ -33,6 +33,7 @@ boolean textswitch; // Variable, die zwischen der Eingabe von Steurungs-Strings 
 // AUGEN
 
 String mx;
+String my;
 float xMouse;
 float yMouse;
 float easing = 0.1;
@@ -64,8 +65,10 @@ void setup() {
   sb.addPublish( "TextSend", "string" );
 
   sb.addPublish( "DC_Send", "string" );
+
+  sb.addPublish( "Servo_SendX", "string" );
   
-  sb.addPublish( "Servo_Send", "string" );
+  sb.addPublish( "Servo_SendY", "string" );
 
   //sb.addPublish( "ServoSendX", "range");
 
@@ -97,10 +100,10 @@ void draw() {
   // ellipse, die der Maus-Position mit Easing folgt
   // Wird zurückgestellt, vorerst werden Servo-Motoren und DC-Motor zuverlässig
   // angesteuert!
-  
 
-   
-   
+
+  // Easing wird in Yoshi's Skript durchgeführt
+  /*
    float targetX = mouseX;
    float dx = targetX - xMouse;
    xMouse += dx * easing;
@@ -108,28 +111,50 @@ void draw() {
    float targetY = mouseY;
    float dy = targetY - yMouse;
    yMouse += dy * easing;
-   
-   
-   fill(255, 0, 0, 50);
-   ellipse(xMouse, yMouse, 50, 50);
-   
-   
+   */
+
+
+
+
 
   // einfache, statische Augen
+  /*
   text( "X " + mouseX, mouseX + 50, mouseY );
-  text( "Y "+ mouseY, mouseX + 50, mouseY + 20 );
+   text( "Y "+ mouseY, mouseX + 50, mouseY + 20 );*/
 
-  ellipse (640, 525, 50, 50);
-  ellipse (1040, 525, 50, 50);
-  
- if( mouseX - pmouseX > 1) {
-   
- String mx= str(mouseX);
- last_string = local_string;
- local_string = mx;
- sb.send("Servo_Send", local_string); 
- println(mx);
- }
+  fill(255, 0, 0, 50);
+  //ellipse(xMouse, yMouse, 50, 50); Einzelnes TestAuge
+
+  ellipse (mouseX-200, mouseY, 50, 50);
+  ellipse (mouseX+200, mouseY, 50, 50);
+
+  if ( mouseX - pmouseX > 1) {
+
+    //Mappen der MausWerte von der Auflösung des Terminal-Screens auf die Auflösung des Yoshi-Screens
+    float fmapX = map (mouseX, 0, 1600, 0, 1024);
+    
+    //Runden der floats zu ints
+    int mapX = round(fmapX);
+
+    String mx= str(mapX);
+    last_string = local_string;
+    local_string = mx;
+    sb.send("Servo_SendX", local_string); 
+    println(mx);
+  }
+
+  if ( mouseY - pmouseY > 1) {
+
+    float fmapY = map (mouseY, 0, 1050, 0, 600);
+    int mapY = round(fmapY);
+
+
+    String my= str(mapY);
+    last_string = local_string;
+    local_string = my;
+    sb.send("Servo_SendY", local_string); 
+    println(my);
+  }
 
   // AUGEN ende
 
@@ -222,7 +247,7 @@ void draw() {
    noStroke();
    rect(mx,my, 5,5);
    
-                                      /*println(mouseX + " MouseX");
+                                            /*println(mouseX + " MouseX");
    println(mouseY + " MouseY");
    println(mx + " MX");
    println(mapX + " MapX");
