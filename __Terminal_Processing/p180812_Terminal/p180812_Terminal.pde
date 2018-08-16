@@ -31,6 +31,8 @@ boolean Remote = true;
 boolean textswitch; // Variable, die zwischen der Eingabe von Steurungs-Strings und der Eingabe von Text-Strings umschaltet
 
 // AUGEN
+
+String mx;
 float xMouse;
 float yMouse;
 float easing = 0.1;
@@ -119,6 +121,15 @@ void draw() {
 
   ellipse (640, 525, 50, 50);
   ellipse (1040, 525, 50, 50);
+  
+ if( mouseX - pmouseX > 1) {
+   
+ String mx= str(mouseX);
+ last_string = local_string;
+ local_string = mx;
+ sb.send("Servo_Send", local_string); 
+ println(mx);
+ }
 
   // AUGEN ende
 
