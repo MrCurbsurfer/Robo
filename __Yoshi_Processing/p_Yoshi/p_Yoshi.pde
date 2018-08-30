@@ -46,7 +46,7 @@ Spacebrew sb;
 void setup() {
   
   
-  size(1024, 600);
+  size(1920, 1080);
   smooth();
 
 
@@ -69,7 +69,7 @@ void setup() {
   // Zuordnung eines Ports aus der Liste zum Serial class Objekt
 
   //String OrionPortName = Serial.list()[1];
-  String ArduinoPortName = Serial.list()[1];
+  String ArduinoPortName = Serial.list()[0];
 
   // Initiieren der Ports
 
@@ -87,11 +87,13 @@ void draw() {
 
 
   background(0);
-  
-  float fmapEyesY = map (eyesY, 250,800,25,575);
+ 
+  //Dritter Zahlenwert in der Klammer: Radius des Auges 
+  float fmapEyesY = map (eyesY, 250,800,75,1005);
   int mapEyesY = round(fmapEyesY);
   
-  float fmapEyesX = map (eyesX, 555,1125, 225,799);
+    //Dritter Zahlenwert in der Klammer: Radius des Auges + Abstand der Augen vom MausCursor
+  float fmapEyesX = map (eyesX, 555,1125, 425, 1495);
   int mapEyesX = round(fmapEyesX);
   
   float targetX = mapEyesX;
@@ -103,16 +105,14 @@ void draw() {
   EyesY += dy * easing;
 
   
-  
-  
-   ellipse(EyesX + 200 , EyesY,50,50);
-   ellipse(EyesX - 200 , EyesY,50,50);
-  
- 
-  
  
   
 
+  
+   ellipse(EyesX + 350 , EyesY,150,150);
+   ellipse(EyesX - 350 , EyesY,150,150);
+
+  
 
 
 
