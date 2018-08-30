@@ -111,7 +111,7 @@ void draw() {
   ellipse (eyesX-200, eyesY, 50, 50);
   ellipse (eyesX+200, eyesY, 50, 50);
 
-  if ( mouseX - pmouseX > 1 || mouseY - pmouseY > 1) {
+  if ( mouseX - pmouseX > .1 || mouseY - pmouseY > .1) {
 
 
     // Hier wird ein Array mit dem Namen "eyesXY" erstellt um die Werte von
@@ -132,7 +132,7 @@ void draw() {
   //------------------------------------------
   // AUGEN ende
 
-  
+
 
   noFill();
   stroke(255);
