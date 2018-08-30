@@ -27,23 +27,25 @@ String last_string = "";
 // mx und my kommen vom Terminal als Strings, werden im Tab Incoming_Strings zu 
 // Integern konvertiert
 int val;
-int mx;
-int my;
 
-float xMouse_Left;
-float xMouse_Right;
-float yMouse;
+// X und Y Werte für die Augen vor der weiteren Verarbeitung
+int eyesX;
+int eyesY;
+
+// Finale Werte für die Augen
+int EyesX;
+int EyesY;
 float easing = 0.1;
 
-/*String local_string_mouse = "";
- String remote_string_mouse = "";
- String last_string_mouse = "";*/
+char SDCremote;
 
 Spacebrew sb;
 
 
 
 void setup() {
+  
+  
   size(1024, 600);
   smooth();
 
@@ -54,8 +56,9 @@ void setup() {
 
   //declare your subscribers
   sb.addSubscribe( "Receive", "string" );
-  sb.addSubscribe ( "Servo_ReceiveX", "string");
-  sb.addSubscribe ( "Servo_ReceiveY", "string");
+  sb.addSubscribe ( "Eyes_Receive", "string");
+  sb.addSubscribe ("Servo_DC_Receive", "string");
+
 
   //connect to server!
   sb.connect(server, name, description );
@@ -84,33 +87,31 @@ void draw() {
 
 
   background(0);
-
-  //Hier wird das Easing erledigt
-  // Jedes Auge benötigt einen eigenen X-Wert, deshalb müssen 2 Werte ge-east werden
-  float targetX_Left = mx - 200;
-  float dx_Left = targetX_Left - xMouse_Left;
-  xMouse_Left += dx_Left * easing;
-
-  float targetX_Right = mx + 200;
-  float dx_Right = targetX_Right - xMouse_Right;
-  xMouse_Right += dx_Right * easing;
-
-  float targetY = my;
-  float dy = targetY - yMouse;
-  yMouse += dy * easing;
+  
+  float fmapEyesY = map (eyesY, 250,800,25,575);
+  int mapEyesY = round(fmapEyesY);
+  
+  float fmapEyesX = map (eyesX, 555,1125, 225,799);
+  int mapEyesX = round(fmapEyesX);
+  
+  float targetX = mapEyesX;
+  float dx = targetX - EyesX;
+  EyesX += dx * easing;
+  
+  float targetY = mapEyesY;
+  float dy = targetY - EyesY;
+  EyesY += dy * easing;
 
   
-  // Die bereits ge-easten Werte werden auf die Abmessungen des Displays begrenzt
-  // Zur unteren Grenze wird der Radius der Ellipse addiert, von der oberen Grenze subtrahiert
-  float c_xMouse_Left = constrain(xMouse_Left, 25, 999);
-  float c_xMouse_Right = constrain(xMouse_Right, 25, 999);
   
-   
-  float c_yMouse = constrain(yMouse, 25, 575);
   
-
-  ellipse (c_xMouse_Left, c_yMouse, 50, 50);
-  ellipse (c_xMouse_Right,c_yMouse, 50, 50);
+   ellipse(EyesX + 200 , EyesY,50,50);
+   ellipse(EyesX - 200 , EyesY,50,50);
+  
+ 
+  
+ 
+  
 
 
 

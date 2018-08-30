@@ -20,14 +20,14 @@ void Buttons () {
         println("start"); 
         last_string = local_string;
         local_string = "l";
-        sb.send("DC_Send", local_string);  
+        sb.send("Servo_DC_Send", local_string);  
         break;
 
         case(ControlP5.ACTION_RELEASE): 
         println("stop"); 
         last_string = local_string;
         local_string = "z";
-        sb.send("DC_Send", local_string);
+        sb.send("Servo_DC_Send", local_string);
 
         println( "Stopp DC");
         break;
@@ -55,14 +55,14 @@ void Buttons () {
         println("start"); 
         last_string = local_string;
         local_string = "j";
-        sb.send("DC_Send", local_string);  
+        sb.send("Servo_DC_Send", local_string);  
         break;
 
         case(ControlP5.ACTION_RELEASE): 
         println("stop"); 
         last_string = local_string;
         local_string = "z";
-        sb.send("DC_Send", local_string);
+        sb.send("Servo_DC_Send", local_string);
 
         println( "Stopp DC");
         break;
@@ -92,14 +92,14 @@ void Buttons () {
         println("start"); 
         last_string = local_string;
         local_string = "i";
-        sb.send("Servo_Send", local_string);  
+        sb.send("Servo_DC_Send", local_string);  
         break;
 
         case(ControlP5.ACTION_RELEASE): 
         println("stop"); 
         last_string = local_string;
         local_string = "z";
-        sb.send("Servo_Send", local_string);
+        sb.send("Servo_DC_Send", local_string);
 
         println( "Stopp Servo");
         break;
@@ -109,7 +109,7 @@ void Buttons () {
   );
 
 
-// BUTTON: DC nach links bewegen
+// BUTTON: Servo nach unten bewegen
   PImage[] Servo_Arrow_Down = {loadImage("Servo_Arrow_Down.png"), loadImage("Servo_Arrow_Down.png"), loadImage("Servo_Arrow_Down_Active.png")};
 
   Button Servo_Down = cp5.addButton("Look_Down")
@@ -127,7 +127,7 @@ void Buttons () {
         println("start"); 
         last_string = local_string;
         local_string = "k";
-        sb.send("Servo_Send", local_string);  
+        sb.send("Servo_DC_Send", local_string);  
         break;
 
         case(ControlP5.ACTION_RELEASE): 
@@ -136,12 +136,14 @@ void Buttons () {
         local_string = "z";
         sb.send("Servo_Send", local_string);
 
-        println( "Stopp Servo");
+        println( "Servo_DC_Send");
         break;
       }
     }
   }
   );
+  
+ 
 
 
 }

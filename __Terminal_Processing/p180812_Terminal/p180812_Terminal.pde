@@ -32,11 +32,12 @@ boolean textswitch; // Variable, die zwischen der Eingabe von Steurungs-Strings 
 
 // AUGEN
 
-String mx;
-String my;
+String EyeString;
+//String mx;
+//String my;
 float xMouse;
 float yMouse;
-float easing = 0.1;
+
 
 
 void setup() {
@@ -61,18 +62,9 @@ void setup() {
 
   // declare your publishers
   sb.addPublish( "DriveSend", "string" ); 
-
   sb.addPublish( "TextSend", "string" );
-
-  sb.addPublish( "DC_Send", "string" );
-
-  sb.addPublish( "Servo_SendX", "string" );
-  
-  sb.addPublish( "Servo_SendY", "string" );
-
-  //sb.addPublish( "ServoSendX", "range");
-
-  //sb.addPublish( "ServoSendY", "range");
+  sb.addPublish( "Servo_DC_Send", "string" );
+  sb.addPublish( "Eyes_Send", "string" );
 
 
   // connect!
@@ -85,7 +77,7 @@ void setup() {
   ///////// BUTTONS ///////////////////////////
   // Hier wird void Buttons () aufgerufen - siehe Tab Buttons
 
-  Buttons ();
+  Buttons();
   cp5 = new ControlP5(this);
 }
 
@@ -96,67 +88,51 @@ void draw() {
 
 
   // AUGEN start
+  //------------------------------------------
 
-  // ellipse, die der Maus-Position mit Easing folgt
-  // Wird zurückgestellt, vorerst werden Servo-Motoren und DC-Motor zuverlässig
-  // angesteuert!
-
-
-  // Easing wird in Yoshi's Skript durchgeführt
-  /*
-   float targetX = mouseX;
-   float dx = targetX - xMouse;
-   xMouse += dx * easing;
-   
-   float targetY = mouseY;
-   float dy = targetY - yMouse;
-   yMouse += dy * easing;
-   */
-
-
-
-
-
-  // einfache, statische Augen
-  /*
+  // Permanentes Ausgeben der X/Y Mauswerte neben dem Cursor
   text( "X " + mouseX, mouseX + 50, mouseY );
-   text( "Y "+ mouseY, mouseX + 50, mouseY + 20 );*/
+  text( "Y "+ mouseY, mouseX + 50, mouseY + 20 );
+
+
+
+  // mouseX und mouseY werden in eine Variable gepackt. Ohne diesen Schritt kann 
+  // die constrain Funktion nicht verwendet werden
+
+
+  int eyesX = mouseX;
+  int eyesY = mouseY;
+
+
+  eyesX = constrain(eyesX, 555, 1125);
+  eyesY = constrain(eyesY, 250, 800);
 
   fill(255, 0, 0, 50);
-  //ellipse(xMouse, yMouse, 50, 50); Einzelnes TestAuge
+  ellipse (eyesX-200, eyesY, 50, 50);
+  ellipse (eyesX+200, eyesY, 50, 50);
 
-  ellipse (mouseX-200, mouseY, 50, 50);
-  ellipse (mouseX+200, mouseY, 50, 50);
+  if ( mouseX - pmouseX > 1 || mouseY - pmouseY > 1) {
 
-  if ( mouseX - pmouseX > 1) {
 
-    //Mappen der MausWerte von der Auflösung des Terminal-Screens auf die Auflösung des Yoshi-Screens
-    float fmapX = map (mouseX, 0, 1600, 0, 1024);
-    
-    //Runden der floats zu ints
-    int mapX = round(fmapX);
+    // Hier wird ein Array mit dem Namen "eyesXY" erstellt um die Werte von
+    // eyesX und eyesY zu speichern
+    int[] eyesXY = new int[2]; 
+    eyesXY[0] = eyesX; 
+    eyesXY[1] = eyesY; 
 
-    String mx= str(mapX);
+
+    // Die Integer-Werte werden im String "EyeString" zusammengefasst
+    String EyeString = join(nf(eyesXY, 0), ","); 
+    println(EyeString);   
+
     last_string = local_string;
-    local_string = mx;
-    sb.send("Servo_SendX", local_string); 
-    println(mx);
+    local_string = EyeString;
+    sb.send("Eyes_Send", local_string);
   }
-
-  if ( mouseY - pmouseY > 1) {
-
-    float fmapY = map (mouseY, 0, 1050, 0, 600);
-    int mapY = round(fmapY);
-
-
-    String my= str(mapY);
-    last_string = local_string;
-    local_string = my;
-    sb.send("Servo_SendY", local_string); 
-    println(my);
-  }
-
+  //------------------------------------------
   // AUGEN ende
+
+  
 
   noFill();
   stroke(255);
@@ -172,40 +148,6 @@ void draw() {
 
 
 
-
-
-  /* if (mouseX <= 330  ) {
-   
-   last_string = local_string;
-   local_string = "l";
-   sb.send("DC_Send", local_string);
-   
-   println( "Turning Head Left");
-   println( "Sending l");
-   }
-   
-   
-   
-   if (mouseX >= 1350  ) {
-   
-   last_string = local_string;
-   local_string = "k";
-   sb.send("DC_Send", local_string);
-   
-   println( "Turning Head Right");
-   println( "Sending k");
-   }
-   
-   if( 330 <= mouseX && mouseX <= 1350){
-   
-   last_string = local_string;
-   local_string = "z";
-   sb.send("DC_Send", local_string);
-   
-   println( "Stopp DC");
-   
-   }*/
-
   fill(0, 200, 0);
   noStroke();
   rect(0, 800, 1680, 30);
@@ -220,55 +162,6 @@ void draw() {
   fill(0);
 
   popMatrix();
-
-
-  /*
-// SERVO-STEUERUNG __________________________________
-   
-   // Mauspad
-   rect(360,150,360,360);
-   fill(0);
-   
-   // die Mauswerte auf das Mauspad begrenzen);
-   int mx = constrain(mouseX, 360, 720);
-   int my = constrain(mouseY, 150, 510);
-   
-   // Die Werte der Maus auf Wert zwischen 150 und 600 mappen
-   // 150 - 600 sind SERVOMIN - SERVOMAX PWM im dazugehörigen Arduinoskript (ggf. anpassen!)
-   float fmapX = map (mx, 360,720,150,600);
-   float fmapY = map (my, 150,510,150,600);
-   
-   // Dezimalstellen von float wegkürzen
-   int mapX = round(fmapX);
-   int mapY = round(fmapY);
-   
-   // Zeichnen des Cursors;
-   fill(255,0,0);
-   noStroke();
-   rect(mx,my, 5,5);
-   
-                                            /*println(mouseX + " MouseX");
-   println(mouseY + " MouseY");
-   println(mx + " MX");
-   println(mapX + " MapX");
-   println(mapY + " MapY");
-   
-   //Sliderbox X
-   
-   fill(0,0,0,50);
-   noStroke();
-   rect(0, 510, width, 40);
-   
-   stroke(0);
-   line(0,530,720,530);
-   
-   fill(255, 0, 0);
-   stroke(200, 0, 0);
-   ellipse (mapX, 530, 10,10);
-   
-   
-   */
-
 
 
 

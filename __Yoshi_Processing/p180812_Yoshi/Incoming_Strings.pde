@@ -1,6 +1,6 @@
 void onStringMessage( String name, String value ) {
 
-  println("got string message " + name + " : " + value);
+  //println("got string message " + name + " : " + value);
   remote_string = value;
 
   /*if(remote_string.length() > 2) {
@@ -16,28 +16,93 @@ void onStringMessage( String name, String value ) {
   char remote = value.charAt(0);
 
 
+
+
+
+  /////////// SUBSCRIBER Eyes_Recieve ///////////////////////////
+
   // check for name
-  // Hier passiert nur etwas, wenn der Subscriber "Servo_ReceiveX" einen String erhält
-  if ( name.equals("Servo_ReceiveX")) {
+  // Hier passiert nur etwas, wenn der Subscriber "Eyes_Receive" einen String erhält
+  if ( name.equals("Eyes_Receive")) {
 
-    println("got string message " + name + " : " + value);
+    //println("got string message " + name + " : " + value);
     remote_string = value;
-    println(value);
+    //println(value);
 
-    mx = Integer.parseInt(value); 
-    println(mx);
+    // Vom Terminal kommt ein String in folgendem Format: (1203,324). Das sind die aktuellen MausX und MausY
+    // Werte die bereits in den String "value" gepackt wurden. 
+    // Folgende Funktion Teilt diesen String am Komma und verpackt diese in die Integer-Variablen eyesX und eyesY 
+
+    String [] valXY = split(value, ',');
+
+    String valX = valXY[0];
+    String valY = valXY[1];
+
+    eyesY = Integer.parseInt(valY); 
+    eyesX = Integer.parseInt(valX); 
+
+    //println ("eyesX " + eyesX + ", eyesY" + eyesY);
+
+
+
+    //println (eyesY);
   }
 
+  /////////// SUBSCRIBER Servo_Receive ///////////////////////////
 
-  if ( name.equals("Servo_ReceiveY")) {
+  if ( name.equals("Servo_DC_Receive")) {
 
-    println("got string message " + name + " : " + value);
+    //println("got string message " + name + " : " + value);
     remote_string = value;
-    println(value);
+    //println(value);
 
-    my = Integer.parseInt(value); 
-    println(my);
+
+    value = trim(value);
+
+
+    // value.charAt(0) bestimmt, dass vom String 'value' der char an Position 0 ( also der 1. Buchstabe)
+    // übernommen wird
+    char SDCremote = value.charAt(0);
+
+   
+    /////////// Chars for Servo/DC Motor ///////////////////////////
+
+    //Turn_Left
+    if (SDCremote == 'j')
+    {
+      ArduinoPort.write('j');
+      println("SDC "+ SDCremote);
+    }
+
+    //Turn_Right
+    if (SDCremote == 'l')
+    {
+      ArduinoPort.write('l');
+      println("SDC "+ SDCremote);
+    }
+    
+    //Up
+    if (SDCremote == 'i')
+    {
+      ArduinoPort.write('i');
+      println("SDC "+ SDCremote);
+    }
+    
+    //Down
+    if (SDCremote == 'k')
+    {
+      ArduinoPort.write('k');
+      println("SDC "+ SDCremote);
+    }
+    
+    //Stopp
+    if (SDCremote == 'z')
+    {
+      ArduinoPort.write('z');
+      println("SDC "+ SDCremote);
+    }
   }
+
 
 
 
@@ -120,27 +185,46 @@ void onStringMessage( String name, String value ) {
     }
 
 
-    //_____Chars_for_Arduino_DC_Motor_(Head)_______________
+/*
+    /////////// Chars for Servo/DC Motor ///////////////////////////
 
     //Turn_Left
-    if (remote == 'j')
+    if (SDCremote == 'j')
     {
       ArduinoPort.write('j');
       println(remote);
     }
 
     //Turn_Right
-    if (remote == 'l')
+    if (SDCremote == 'l')
     {
       ArduinoPort.write('l');
+      println(SDCremote + " Arduino");
+    }
+    
+    //Up
+    if (SDCremote == 'i')
+    {
+      ArduinoPort.write('i');
       println(remote + " Arduino");
     }
-
-    if (remote == 'z')
+    
+    //Down
+    if (SDCremote == 'k')
+    {
+      ArduinoPort.write('k');
+      println(remote + " Arduino");
+    }
+    
+    //Stopp
+    if (SDCremote == 'z')
     {
       ArduinoPort.write('z');
       println(remote + " Arduino");
     }
+    
+  */
+    
   }
 
   if (Auto == true) {
