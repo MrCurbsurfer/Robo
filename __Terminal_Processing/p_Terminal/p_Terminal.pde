@@ -17,11 +17,17 @@ String description ="Client that sends";
 Spacebrew sb;
 ControlP5 cp5;
 
-// Keep track of our current place in the range
+// Strings für Steuersignale
 String local_string = "";
 String remote_string = "";
 String last_string = "";
 
+
+
+// Strings für Texteingabe
+String local_text = "";
+String remote_text = "";
+String last_text = "";
 
 
 int fontColor = 255;
@@ -63,8 +69,8 @@ void setup() {
   // declare your publishers
   sb.addPublish( "DriveSend", "string" ); 
   sb.addPublish( "TextSend", "string" );
-  sb.addPublish( "Servo_DC_Send", "string" );
   sb.addPublish( "Eyes_Send", "string" );
+  sb.addPublish( "Servo_DC_Send", "string" );
 
 
   // connect!
@@ -108,6 +114,7 @@ void draw() {
   eyesY = constrain(eyesY, 250, 800);
 
   fill(255, 0, 0, 50);
+  noStroke();
   ellipse (eyesX-200, eyesY, 50, 50);
   ellipse (eyesX+200, eyesY, 50, 50);
 
@@ -140,29 +147,29 @@ void draw() {
   rectMode(CENTER);
   rect(840, 525, 1024, 600);
 
-
+  /*
   rectMode(CORNER);
-
-  pushMatrix();
-  translate(0, 50);
-
-
-
-  fill(0, 200, 0);
-  noStroke();
-  rect(0, 800, 1680, 30);
-
-
-  fill(0, 200, 0, 99);
-  rect(0, 830, 1680, 580);
-
-  fill(255);
-  rect(130, 830, 1680, 200);
-
-  fill(0);
-
-  popMatrix();
-
+   
+   pushMatrix();
+   translate(0, 50);
+   
+   
+   
+   fill(0, 200, 0);
+   noStroke();
+   rect(0, 800, 1680, 30);
+   
+   
+   fill(0, 200, 0, 99);
+   rect(0, 830, 1680, 580);
+   
+   fill(255);
+   rect(130, 830, 1680, 200);
+   
+   fill(0);
+   
+   popMatrix();
+   */
 
 
 
@@ -170,9 +177,7 @@ void draw() {
   // FAHWERK STEUERUNG __________________________________
 
   fill(fontColor);
-  // draw lines
-  line(0, 35, width - 60, 35);
-  line(30, 95, width, 95);
+
 
   if (textswitch == false) {
 
@@ -193,18 +198,19 @@ void draw() {
   //Laut Spacebrew sind nur 50 Zeichen möglich!
 
 
+// TEXT-Anzeige ///////////////////////////////////
   if (textswitch == true) {
 
     // draw message being typed
     text("Type Message: ", 30, 900);  
-    text(local_string, 150, 900);  
+    text(local_text, 150, 900);  
 
     text("Message Sent: ", 30, 920);  
-    text(last_string, 150, 920);  
+    text(last_text, 150, 920);  
 
     // draw latest received message
     text("Message Received: ", 30, 940);  
-    text(remote_string, 150, 940);
+    text(remote_text, 150, 940);
 
     text("TYPE MODE", 30, 50);
   }

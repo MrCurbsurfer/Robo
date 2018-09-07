@@ -3,8 +3,6 @@ void onStringMessage( String name, String value ) {
   //println("got string message " + name + " : " + value);
   remote_string = value;
 
-  /*if(remote_string.length() > 2) {
-   tts.speak(remote_string);}*/
 
 
   // trim(value) kürzt überflüssige Zeichen weg (z.B Leerzeichen);
@@ -101,6 +99,26 @@ void onStringMessage( String name, String value ) {
       ArduinoPort.write('z');
       println("SDC "+ SDCremote);
     }
+  }
+
+
+/////////// SUBSCRIBER Text_Receive ///////////////////////////
+
+  // check for name
+  // Hier passiert nur etwas, wenn der Subscriber "Text_Receive" einen String erhält
+  if ( name.equals("Text_Receive")) {
+
+    //println("got string message " + name + " : " + value);
+    remote_string = value;
+    //println(value);
+    
+   if(remote_string.length() > 5) {
+   tts.speak(remote_string);}
+
+
+    
+
+    
   }
 
 

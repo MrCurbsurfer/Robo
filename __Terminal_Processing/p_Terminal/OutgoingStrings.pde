@@ -1,16 +1,22 @@
 void keyPressed() {
 
 
+ // Mit SpacebrewServer verbinden 
+  
   if (key == 'ß') {
     link("http://spacebrew.github.io/spacebrew/admin/admin.html?server=sandbox.spacebrew.cc");
   }
 
 
+
   // Textswitch
 
   if (key == CODED) {
-    if (textswitch ^= keyCode == SHIFT)   println("yo");
-    else                           println("no");
+    if (textswitch ^= keyCode == SHIFT)   
+    textswitch = true; 
+    
+    else                           
+    textswitch = false;
   }
 
 
@@ -48,7 +54,7 @@ void keyPressed() {
 
 
 
-    ///// Strings for Orion /////////////////////////  
+    ///// Strings for Orion ///////////////////////////////////////////////////////////////////////////  
 
     // Forward
     if (key == 'w') { 
@@ -131,40 +137,36 @@ void keyPressed() {
     }*/
     
  
-    // Kann das Weg?
-    /*    if (key != CODED) {
-     if (key == DELETE || key == BACKSPACE) {
-     if (local_string.length() - 1 >= 0) {
-     local_string = local_string.substring(0, (local_string.length() - 1));
-     sb.send("DriveSend", local_string);
-     last_string = local_string;
-     local_string = "";
-     }
-     }
-     }*/
+
      
   }
 
 
-  if (textswitch == true) {
 
-    if (key != CODED) {
-      if (key == DELETE || key == BACKSPACE) {
-        if (local_string.length() - 1 >= 0) {
-          local_string = local_string.substring(0, (local_string.length() - 1));
-        }
-      } else if (key == ENTER || key == RETURN) {
-        sb.send("TextSend", local_string);
-        last_string = local_string;
-        local_string = "";
-      } else {
-        if (local_string.length() <= 100) {
-          local_string += key;
-        }
+
+// TEXT-Eingabe /////////////////////////////////////////////////////////////////////////////////////////////////////////
+  if (key != CODED) {
+    if (key == DELETE || key == BACKSPACE) {
+      if (local_text.length() - 1 >= 0) {
+        local_text = local_text.substring(0, (local_text.length() - 1));  
       }
     }
-  }
-}
+
+    else if (key == ENTER || key == RETURN) {
+      sb.send("TextSend", local_text);
+      last_text = local_text;
+      local_text = "";  
+    } 
+
+    else {
+      if (local_text.length() <= 100) {
+        local_text += key;
+      }
+    }
+  } 
+  
+  
+} // Void KeyPressed () Ende
 
 
 void keyReleased() {

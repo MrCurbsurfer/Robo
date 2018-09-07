@@ -5,7 +5,7 @@ import guru.ttslib.*;
 
 
 
-//TTS tts;
+TTS tts;
 Serial OrionPort;
 Serial ArduinoPort;
 
@@ -56,6 +56,7 @@ void setup() {
 
   //declare your subscribers
   sb.addSubscribe( "Receive", "string" );
+  sb.addSubscribe( "Text_Receive", "string" );
   sb.addSubscribe ( "Eyes_Receive", "string");
   sb.addSubscribe ("Servo_DC_Receive", "string");
 
@@ -77,7 +78,7 @@ void setup() {
   ArduinoPort = new Serial(this, ArduinoPortName, 9600);
 
 
-  // tts = new TTS();
+  tts = new TTS();
 
   Auto = false;
 }
