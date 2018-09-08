@@ -159,7 +159,7 @@ void keyPressed() {
     } 
 
     else {
-      if (local_text.length() <= 100) {
+      if (local_text.length() <= 50) {
         local_text += key;
       }
     }

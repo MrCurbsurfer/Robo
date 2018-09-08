@@ -2,6 +2,7 @@
 import processing.serial.*;
 import spacebrew.*;
 import guru.ttslib.*;
+import de.looksgood.ani.*;
 
 
 
@@ -38,6 +39,14 @@ int EyesY;
 float easing = 0.1;
 
 
+// ANI AUGEN
+
+float ANIx = 256;
+float ANIy = 256;
+
+float ANIx2 = 256;
+float ANIy2 = 256;
+
 PImage Eye;
 
 
@@ -59,6 +68,7 @@ void setup() {
 
   //instantiate the spacebrewConnection variable
   sb = new Spacebrew( this );
+  Ani.init(this); // AUGEN ANIMATION
 
   //declare your subscribers
   sb.addSubscribe( "Receive", "string" );
@@ -95,36 +105,43 @@ void draw() {
 
   background(#313130);
 
+
+
+  /*
   //Dritter Zahlenwert in der Klammer: Radius des Auges 
-  float fmapEyesY = map (eyesY, 250, 800, 75, 1005);
-  int mapEyesY = round(fmapEyesY);
-
-  //Dritter Zahlenwert in der Klammer: Radius des Auges + Abstand der Augen vom MausCursor
-  float fmapEyesX = map (eyesX, 555, 1125, 425, 1495);
-  int mapEyesX = round(fmapEyesX);
-
-  float targetX = mapEyesX;
-  float dx = targetX - EyesX;
-  EyesX += dx * easing;
-
-  float targetY = mapEyesY;
-  float dy = targetY - EyesY;
-  EyesY += dy * easing;
-
-
-
-
-  //Augen zeichnen
-
-  //ellipse(EyesX + 350 , EyesY,150,150);
-  //ellipse(EyesX - 350 , EyesY,150,150);
+   float fmapEyesY = map (eyesY, 250, 800, 75, 1005);
+   int mapEyesY = round(fmapEyesY);
+   
+   //Dritter Zahlenwert in der Klammer: Radius des Auges + Abstand der Augen vom MausCursor
+   float fmapEyesX = map (eyesX, 555, 1125, 425, 1495);
+   int mapEyesX = round(fmapEyesX);
+   
+   float targetX = mapEyesX;
+   float dx = targetX - EyesX;
+   EyesX += dx * easing;
+   
+   float targetY = mapEyesY;
+   float dy = targetY - EyesY;
+   EyesY += dy * easing;
+   
+   
+   
+   
+   //Augen zeichnen
+   
+   //ellipse(EyesX + 350 , EyesY,150,150);
+   //ellipse(EyesX - 350 , EyesY,150,150);
+   
+   imageMode(CENTER);
+   
+   image(Eye, EyesX + 350, EyesY);
+   image(Eye, EyesX - 350, EyesY);
+   */
 
   imageMode(CENTER);
 
-  image(Eye, EyesX + 350, EyesY);
-  image(Eye, EyesX - 350, EyesY);
-
-
+  image(Eye, ANIx, ANIy);
+  image(Eye, ANIx2, ANIy2);
 
 
 

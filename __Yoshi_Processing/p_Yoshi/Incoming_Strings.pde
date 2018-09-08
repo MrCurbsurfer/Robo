@@ -38,6 +38,13 @@ void onStringMessage( String name, String value ) {
 
     eyesY = Integer.parseInt(valY); 
     eyesX = Integer.parseInt(valX); 
+    
+    
+  Ani.to(this, 1.5, "ANIx", eyesX-300);
+  Ani.to(this, 1.5, "ANIy", eyesY);
+
+  Ani.to(this, 1.5, "ANIx2", eyesX+300);
+  Ani.to(this, 1.5, "ANIy2", eyesY);
 
     //println ("eyesX " + eyesX + ", eyesY" + eyesY);
 
@@ -112,7 +119,7 @@ void onStringMessage( String name, String value ) {
     remote_string = value;
     //println(value);
     
-   if(remote_string.length() > 5) {
+   if(remote_string.length() > 3) {
    tts.speak(remote_string);}
 
 

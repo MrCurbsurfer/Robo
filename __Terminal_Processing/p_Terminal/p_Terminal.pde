@@ -8,6 +8,7 @@
 
 import controlP5.*;
 import spacebrew.*;
+import de.looksgood.ani.*;
 
 String server="sandbox.spacebrew.cc";
 String name="String_Publisher";
@@ -45,7 +46,13 @@ float xMouse;
 float yMouse;
 PImage Eye;
 
+// ANI AUGEN
 
+float ANIx = 256;
+float ANIy = 256;
+
+float ANIx2 = 256;
+float ANIy2 = 256;
 
 void setup() {
 
@@ -64,6 +71,7 @@ void setup() {
 
   sb = new Spacebrew( this ); //SPACEBREW
   cp5 = new ControlP5(this);  //BUTTONS
+  Ani.init(this); // AUGEN ANIMATION
 
 
 
@@ -92,60 +100,80 @@ void setup() {
 void draw() {
 
   background(#606060);
-
-
-
-  // AUGEN start
-  //------------------------------------------
+  
+  rectMode(CORNER);
+  fill(255,30);
+  noStroke();
+  rect(600,310,470,430);
 
   // Permanentes Ausgeben der X/Y Mauswerte neben dem Cursor
   text( "X " + mouseX, mouseX + 50, mouseY );
   text( "Y "+ mouseY, mouseX + 50, mouseY + 20 );
 
+  /*
+  // AUGEN (MouseFollow) Start 
+   //------------------------------------------
+   
+   
+   
+   
+   
+   // mouseX und mouseY werden in eine Variable gepackt. Ohne diesen Schritt kann 
+   // die constrain Funktion nicht verwendet werden
+   
+   
+   int eyesX = mouseX;
+   int eyesY = mouseY;
+   
+   
+   eyesX = constrain(eyesX, 555, 1125);
+   eyesY = constrain(eyesY, 250, 800);
+   
+   fill(255, 0, 0, 50);
+   noStroke();
+   
+   //ellipse (eyesX-200, eyesY, 50, 50);
+   //ellipse (eyesX+200, eyesY, 50, 50);
+   
+   imageMode(CENTER);
+   
+   image(Eye, eyesX-200, eyesY);
+   image(Eye, eyesX+200, eyesY);
+   
+   if ( mouseX - pmouseX > .1 || mouseY - pmouseY > .1) {
+   
+   
+   // Hier wird ein Array mit dem Namen "eyesXY" erstellt um die Werte von
+   // eyesX und eyesY zu speichern
+   int[] eyesXY = new int[2]; 
+   eyesXY[0] = eyesX; 
+   eyesXY[1] = eyesY; 
+   
+   
+   // Die Integer-Werte werden im String "EyeString" zusammengefasst
+   String EyeString = join(nf(eyesXY, 0), ","); 
+   println(EyeString);   
+   
+   last_string = local_string;
+   local_string = EyeString;
+   sb.send("Eyes_Send", local_string);
+   }
+   
+   
+   imageMode(CENTER);
+   
+   image(Eye, eyesX-200, eyesY);
+   image(Eye, eyesX+200, eyesY);
+   
+   //------------------------------------------
+   // AUGEN ende
+   */
 
 
-  // mouseX und mouseY werden in eine Variable gepackt. Ohne diesen Schritt kann 
-  // die constrain Funktion nicht verwendet werden
-
-
-  int eyesX = mouseX;
-  int eyesY = mouseY;
-
-
-  eyesX = constrain(eyesX, 555, 1125);
-  eyesY = constrain(eyesY, 250, 800);
-
-  fill(255, 0, 0, 50);
-  noStroke();
-
-  //ellipse (eyesX-200, eyesY, 50, 50);
-  //ellipse (eyesX+200, eyesY, 50, 50);
-  
   imageMode(CENTER);
 
-  image(Eye, eyesX-200, eyesY);
-  image(Eye, eyesX+200, eyesY);
-
-  if ( mouseX - pmouseX > .1 || mouseY - pmouseY > .1) {
-
-
-    // Hier wird ein Array mit dem Namen "eyesXY" erstellt um die Werte von
-    // eyesX und eyesY zu speichern
-    int[] eyesXY = new int[2]; 
-    eyesXY[0] = eyesX; 
-    eyesXY[1] = eyesY; 
-
-
-    // Die Integer-Werte werden im String "EyeString" zusammengefasst
-    String EyeString = join(nf(eyesXY, 0), ","); 
-    println(EyeString);   
-
-    last_string = local_string;
-    local_string = EyeString;
-    sb.send("Eyes_Send", local_string);
-  }
-  //------------------------------------------
-  // AUGEN ende
+  image(Eye, ANIx, ANIy);
+  image(Eye, ANIx2, ANIy2);
 
 
 
