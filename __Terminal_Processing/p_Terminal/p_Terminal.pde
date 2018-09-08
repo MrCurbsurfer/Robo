@@ -43,6 +43,7 @@ String EyeString;
 //String my;
 float xMouse;
 float yMouse;
+PImage Eye;
 
 
 
@@ -53,6 +54,7 @@ void setup() {
   background(#606060);
   smooth();
 
+  Eye = loadImage("Eye_2.png");
 
 
 
@@ -115,8 +117,14 @@ void draw() {
 
   fill(255, 0, 0, 50);
   noStroke();
-  ellipse (eyesX-200, eyesY, 50, 50);
-  ellipse (eyesX+200, eyesY, 50, 50);
+
+  //ellipse (eyesX-200, eyesY, 50, 50);
+  //ellipse (eyesX+200, eyesY, 50, 50);
+  
+  imageMode(CENTER);
+
+  image(Eye, eyesX-200, eyesY);
+  image(Eye, eyesX+200, eyesY);
 
   if ( mouseX - pmouseX > .1 || mouseY - pmouseY > .1) {
 
@@ -198,7 +206,7 @@ void draw() {
   //Laut Spacebrew sind nur 50 Zeichen möglich!
 
 
-// TEXT-Anzeige ///////////////////////////////////
+  // TEXT-Anzeige ///////////////////////////////////
   if (textswitch == true) {
 
     // draw message being typed

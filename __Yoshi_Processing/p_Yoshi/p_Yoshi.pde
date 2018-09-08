@@ -37,6 +37,11 @@ int EyesX;
 int EyesY;
 float easing = 0.1;
 
+
+PImage Eye;
+
+
+
 char SDCremote;
 
 Spacebrew sb;
@@ -44,8 +49,9 @@ Spacebrew sb;
 
 
 void setup() {
-  
-  
+
+  Eye = loadImage("Eye.png");
+
   size(1920, 1080);
   smooth();
 
@@ -87,38 +93,40 @@ void draw() {
 
 
 
-  background(0);
- 
+  background(#313130);
+
   //Dritter Zahlenwert in der Klammer: Radius des Auges 
-  float fmapEyesY = map (eyesY, 250,800,75,1005);
+  float fmapEyesY = map (eyesY, 250, 800, 75, 1005);
   int mapEyesY = round(fmapEyesY);
-  
-    //Dritter Zahlenwert in der Klammer: Radius des Auges + Abstand der Augen vom MausCursor
-  float fmapEyesX = map (eyesX, 555,1125, 425, 1495);
+
+  //Dritter Zahlenwert in der Klammer: Radius des Auges + Abstand der Augen vom MausCursor
+  float fmapEyesX = map (eyesX, 555, 1125, 425, 1495);
   int mapEyesX = round(fmapEyesX);
-  
+
   float targetX = mapEyesX;
   float dx = targetX - EyesX;
   EyesX += dx * easing;
-  
+
   float targetY = mapEyesY;
   float dy = targetY - EyesY;
   EyesY += dy * easing;
 
-  
- 
-  
-
-  
-   ellipse(EyesX + 350 , EyesY,150,150);
-   ellipse(EyesX - 350 , EyesY,150,150);
-
-  
 
 
 
-  line(30, 35, width - 60, 35);
-  line(30, 115, width-60, 115);
+  //Augen zeichnen
+
+  //ellipse(EyesX + 350 , EyesY,150,150);
+  //ellipse(EyesX - 350 , EyesY,150,150);
+
+  imageMode(CENTER);
+
+  image(Eye, EyesX + 350, EyesY);
+  image(Eye, EyesX - 350, EyesY);
+
+
+
+
 
 
   // draw message being typed
