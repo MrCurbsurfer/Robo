@@ -1,8 +1,8 @@
 void keyPressed() {
 
 
- // Mit SpacebrewServer verbinden 
-  
+  // Mit SpacebrewServer verbinden 
+
   if (key == 'ß') {
     link("http://spacebrew.github.io/spacebrew/admin/admin.html?server=sandbox.spacebrew.cc");
   }
@@ -13,11 +13,13 @@ void keyPressed() {
 
   if (key == CODED) {
     if (textswitch ^= keyCode == SHIFT)   
-    textswitch = true; 
-    
+      textswitch = true; 
+
     else                           
     textswitch = false;
   }
+
+
 
 
   // toggle between Autopilot & RemoteControl
@@ -30,7 +32,7 @@ void keyPressed() {
 
 
     local_string = "#";
-    sb.send("DriveSend", local_string);
+    sb.send("Drive_Send", local_string);
   }
 
 
@@ -46,13 +48,15 @@ void keyPressed() {
     // local_string muss mit 'w' zuerst gesetzt werden bevor er mit sb.send abgeschickt wird!
 
     local_string = "+";
-    sb.send("DriveSend", local_string);
+    sb.send("Drive_Send", local_string);
   }
 
+
+
+
+
+  //  ///////////////////////////////////
   if (textswitch == false && Auto == false) {
-
-
-
 
     ///// Strings for Orion ///////////////////////////////////////////////////////////////////////////  
 
@@ -66,7 +70,7 @@ void keyPressed() {
       // local_string muss mit 'w' zuerst gesetzt werden bevor er mit sb.send abgeschickt wird!
 
       local_string = "w";
-      sb.send("DriveSend", local_string);
+      sb.send("Drive_Send", local_string);
     }
 
     // Backward
@@ -74,7 +78,7 @@ void keyPressed() {
 
       last_string = local_string;
       local_string = "s";
-      sb.send("DriveSend", local_string);
+      sb.send("Drive_Send", local_string);
     }
 
 
@@ -83,7 +87,7 @@ void keyPressed() {
 
       last_string = local_string;
       local_string = "a";
-      sb.send("DriveSend", local_string);
+      sb.send("Drive_Send", local_string);
     }
 
 
@@ -93,7 +97,7 @@ void keyPressed() {
 
       last_string = local_string;
       local_string = "d";
-      sb.send("DriveSend", local_string);
+      sb.send("Drive_Send", local_string);
     }
 
     // Speed Up
@@ -101,7 +105,7 @@ void keyPressed() {
 
       last_string = local_string;
       local_string = "r";
-      sb.send("DriveSend", local_string);
+      sb.send("Drive_Send", local_string);
     }
 
     //Speed Down
@@ -109,7 +113,7 @@ void keyPressed() {
 
       last_string = local_string;
       local_string = "f";
-      sb.send("DriveSend", local_string);
+      sb.send("Drive_Send", local_string);
     }
 
 
@@ -125,48 +129,45 @@ void keyPressed() {
 
 
     // Turn Head Right
- /*   if (key == 'l'|| mouseX <= 330  ) {
-
-      last_string = local_string;
-      local_string = "l";
-      sb.send("DC_Send", local_string);
-      
-      println( "Turning Head Left");
-      println( "Sending l");
-      
-    }*/
-    
- 
-
+    /*   if (key == 'l'|| mouseX <= 330  ) {
      
+     last_string = local_string;
+     local_string = "l";
+     sb.send("DC_Send", local_string);
+     
+     println( "Turning Head Left");
+     println( "Sending l");
+     
+     }*/
   }
 
 
 
 
-// TEXT-Eingabe /////////////////////////////////////////////////////////////////////////////////////////////////////////
-  if (key != CODED) {
-    if (key == DELETE || key == BACKSPACE) {
-      if (local_text.length() - 1 >= 0) {
-        local_text = local_text.substring(0, (local_text.length() - 1));  
+  // TEXT-Eingabe /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  if (textswitch == true) {
+
+    if (key != CODED) {
+      if (key == DELETE || key == BACKSPACE) {
+        if (local_text.length() - 1 >= 0) {
+          local_text = local_text.substring(0, (local_text.length() - 1));
+        }
+      } else if (key == ENTER || key == RETURN) {
+        sb.send("Text_Send", local_text);
+        last_text = local_text;
+        local_text = "";
+      } else {
+        if (local_text.length() <= 50) {
+          local_text += key;
+        }
       }
     }
+  }
+}
+// Void KeyPressed () Ende
 
-    else if (key == ENTER || key == RETURN) {
-      sb.send("TextSend", local_text);
-      last_text = local_text;
-      local_text = "";  
-    } 
 
-    else {
-      if (local_text.length() <= 50) {
-        local_text += key;
-      }
-    }
-  } 
-  
-  
-} // Void KeyPressed () Ende
 
 
 void keyReleased() {
@@ -176,14 +177,14 @@ void keyReleased() {
       last_string = local_string;
       local_string = "#";
       println("sent: #");
-      sb.send("DriveSend", local_string);
+      sb.send("Drive_Send", local_string);
     }
 
     if (Auto == false && Remote == true) {
       last_string = local_string;
       local_string = "q";
       println("sent: q");
-      sb.send("DriveSend", local_string);
+      sb.send("Drive_Send", local_string);
     }
   }
 }

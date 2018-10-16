@@ -13,12 +13,6 @@ void mouseReleased() {
 
   if ( mouseY >= 310 && mouseY <= 740 && mouseX >= 600 && mouseX <= 1070 ) {
 
-
-
-
-
-
-
     int[] eyesXY = new int[2]; 
     eyesXY[0] = mouseX; 
     eyesXY[1] = mouseY; 

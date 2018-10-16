@@ -77,8 +77,8 @@ void setup() {
 
 
   // declare your publishers
-  sb.addPublish( "DriveSend", "string" ); 
-  sb.addPublish( "TextSend", "string" );
+  sb.addPublish( "Drive_Send", "string" ); 
+  sb.addPublish( "Text_Send", "string" );
   sb.addPublish( "Eyes_Send", "string" );
   sb.addPublish( "Servo_DC_Send", "string" );
 
